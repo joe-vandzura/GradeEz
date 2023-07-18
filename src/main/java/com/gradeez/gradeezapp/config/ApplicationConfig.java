@@ -8,16 +8,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-@Configuration
-@RequiredArgsConstructor
-public class ApplicationConfig {
-
-    private final UserRepository userRepo;
-
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return username -> userRepo.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-    }
-
-}
+//@Configuration
+//@RequiredArgsConstructor
+//public class ApplicationConfig {
+//
+//    private final UserRepository userRepo;
+//
+//    @Bean
+//    public UserDetailsService userDetailsService() {
+//        return username -> userRepo.findByEmail(username)
+//                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+//    }
+//
+//}
