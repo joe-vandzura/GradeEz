@@ -22,7 +22,7 @@ public class jwtService {
         return extractClaim(jwtToken, Claims::getSubject);
     }
 
-    public <T> T extractClaim(String jwtToken, Function<Claims, T> claimsResolver)  {
+    public static <T> T extractClaim(String jwtToken, Function<Claims, T> claimsResolver)  {
         final Claims claims = extractAllClaims(jwtToken);
         return claimsResolver.apply(claims);
     }
@@ -58,7 +58,7 @@ public class jwtService {
         return extractClaim(jwtToken, Claims::getExpiration);
     }
 
-    public Claims extractAllClaims(String jwtToken) {
+    public static Claims extractAllClaims(String jwtToken) {
         return Jwts
                 .parserBuilder()
                 .setSigningKey(getSignInKey())
@@ -67,7 +67,7 @@ public class jwtService {
                 .getBody();
     }
 
-    private Key getSignInKey() {
+    private static Key getSignInKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
     }
