@@ -4,9 +4,14 @@
 	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 	<meta charset="UTF-8">
-	<title>Homepage</title>
+	<title>Log In</title>
 </head>
 <body>
+
+<h3>Login with:</h3>
+<p th:each="url : ${urls}">
+  <a th:text="${url.key}" th:href="${url.value}">Client</a>
+</p>
 
 </body>
 </html>
