@@ -17,19 +17,19 @@ public class SecurityConfig {
         UserDetails joey = User.builder()
                 .username("joey")
                 .password("{noop}test123")
-                .roles("USER", "EMPLOYEE", "MANAGER")
+                .roles("USER", "TEACHER")
                 .build();
 
         UserDetails lorena = User.builder()
                 .username("lorena")
                 .password("{noop}test123")
-                .roles("USER", "EMPLOYEE")
+                .roles("USER", "STUDENT")
                 .build();
 
         UserDetails candy = User.builder()
                 .username("candy")
                 .password("{noop}test123")
-                .roles("USER")
+                .roles("USER", "STUDENT")
                 .build();
 
         return new InMemoryUserDetailsManager(joey, lorena, candy);
@@ -39,6 +39,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(configurer ->
                 configurer
+                        .requestMatchers("/").hasRole("USER")
+                        .requestMatchers("/assignments/**").hasRole("TEACHER")
                         .anyRequest().authenticated()
         )
                 .formLogin(form ->
@@ -46,6 +48,9 @@ public class SecurityConfig {
                                 .loginPage("/login")
                                 .loginProcessingUrl("/authenticate")
                                 .permitAll()
+                )
+                .logout(logout ->
+                        logout.permitAll()
                 );
         return http.build();
     }

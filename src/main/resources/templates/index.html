@@ -4,9 +4,21 @@
 	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 	<meta charset="UTF-8">
-	<title>Homepage</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Home</title>
+	<th:block th:insert="~{partials/header-links :: header-links}"></th:block>
 </head>
 <body>
+<th:block th:insert="~{partials/navbar :: navbar}"></th:block>
 
+<h3>Hello <span sec:authentication="principal.username"></span></h3>
+
+<h6><span sec:authentication="principal.authorities"></span></h6>
+
+<a th:href="@{/assignments}">Create Assignment</a>
+
+<a th:href="@{/assignments}">View My Assessments</a>
+
+<th:block th:insert="~{partials/footer-links :: footer-links}"></th:block>
 </body>
 </html>
