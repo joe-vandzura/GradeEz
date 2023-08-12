@@ -11,9 +11,6 @@
 <body>
 <th:block th:insert="~{partials/navbar :: navbar}"></th:block>
 
-<h3>Hello <span sec:authentication="principal.username"></span></h3>
-
-<h6><span sec:authentication="principal.authorities"></span></h6>
 
 <a th:href="@{/assignments}">Create Assignment</a>
 

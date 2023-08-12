@@ -2,34 +2,27 @@ package com.gradeez.gradeezapp.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+@EnableWebSecurity
+public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(configurer ->
-                configurer
-                        .requestMatchers("/").hasRole("USER")
-                        .requestMatchers("/assignments/**").hasRole("TEACHER")
-                        .anyRequest().authenticated()
-        )
-                .formLogin(form ->
-                        form
-                                .loginPage("/login")
-                                .loginProcessingUrl("/authenticate")
-                                .permitAll()
-                )
-                .logout(logout ->
-                        logout.permitAll()
-                )
-                .exceptionHandling(configurer ->
-                        configurer.accessDeniedPage("/access-denied")
-                        );
-        return http.build();
+        return http.authorizeHttpRequests(configurer -> {
+                    configurer.requestMatchers("/").permitAll();
+                    configurer.requestMatchers("/assignments/**").hasRole("TEACHER").anyRequest().authenticated();
+                })
+                .oauth2Login(withDefaults())
+                .formLogin(withDefaults())
+                .build();
     }
 
 }
