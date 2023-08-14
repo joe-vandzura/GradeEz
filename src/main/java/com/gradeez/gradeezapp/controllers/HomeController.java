@@ -1,15 +1,24 @@
 package com.gradeez.gradeezapp.controllers;
 
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import com.gradeez.gradeezapp.models.Course;
+import com.gradeez.gradeezapp.repositories.CourseRepo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
+
 @Controller
+@RequiredArgsConstructor
 public class HomeController {
 
+    private final CourseRepo courseRepo;
+
     @GetMapping("/")
-    public String showHome(OAuth2AuthenticationToken token) {
-        System.out.println(token);
+    public String showHome(Model model) {
+        List<Course> courses = courseRepo.findAll();
+        model.addAttribute("courses", courses);
         return "index";
     }
 

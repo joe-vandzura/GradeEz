@@ -11,10 +11,18 @@
 <body>
 <th:block th:insert="~{partials/navbar :: navbar}"></th:block>
 
+<h2>Welcome to GradeEZ!</h2>
 
-<a th:href="@{/assignments}">Create Assignment</a>
+<div>
+	<h3>My Courses</h3>
+	<a th:href="@{/courses}">View All</a>
 
-<a th:href="@{/assignments}">View My Assessments</a>
+	<ul>
+		<li th:each="course : ${courses}">
+			<a th:href="@{/courses/{id}(id=${course.id})}" th:text="${course.name}"></a>
+		</li>
+	</ul>
+</div>
 
 <th:block th:insert="~{partials/footer-links :: footer-links}"></th:block>
 </body>
